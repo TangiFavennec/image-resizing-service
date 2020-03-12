@@ -7,6 +7,9 @@ const paths = require('./app/client/paths')
 var config = require('./config')
 var log = require('./logger')
 
+if (!fs.existsSync(config.cacheDirectory)) {
+  fs.mkdirSync(config.cacheDirectory);
+}
 
 app.use(bodyParser())
 
