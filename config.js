@@ -10,6 +10,10 @@ const config = {
   defaultHeight: 100,
   defaultQuality: 80,
   defaultWidth: 100,
+  redis: {
+    queueName: 'image resizing',
+    url: 'redis://127.0.0.1:6379'
+  }
 
 };
 

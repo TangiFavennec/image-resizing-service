@@ -8,7 +8,8 @@ const config           = require('../../config');
 const log                = require('../../logger');
 
 class ResizingJob {
-  constructor(options, callback) {
+  constructor(id, options, callback) {
+    this.id = id
     this.options  = options || {};
     this.callback = callback;
   
@@ -66,6 +67,7 @@ ResizingJob.prototype.resizeStream = function () {
                                 this.callback({status: 500, details: 'Could not create resized file'})
                              }
                              else {
+                              log.write(`Finished job n ${this.id}`)
                               this.callback(null, this.cacheFilePath)
                              }
                            } )
