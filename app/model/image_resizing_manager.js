@@ -15,7 +15,7 @@ class ImageResizingManager {
 ImageResizingManager.prototype.addJob = function (resizingOptions, callback) {
   const job = this.queue.add(resizingOptions)
     .then(j => {
-      this.callbackRepository.addCallBack(j.id, callback)
+      this.callbackRepository.add(j.id, callback)
       return j
     })
     .then(j => {
@@ -27,10 +27,11 @@ ImageResizingManager.prototype.startProcessing = function () {
   console.log('Start processing workers')
   let repository = this.callbackRepository
   this.queue.process(function (job, done) {
-    var resizingJob = new ResizingJob(job.data, repository.getCallback(job.id))
+    log.write(`Create job n ${job.id}`)
+    var resizingJob = new ResizingJob(job.id, job.data, repository.getById(job.id))
     log.write(`Create job n ${job.id}`)
     resizingJob.startResize();
-    repository.removeCallBack(job.id)
+    repository.remove(job.id)
     done()
   });
 }
