@@ -22,6 +22,9 @@ lib-cov
 coverage
 *.lcov
 
+# Ignore cache folder
+cache/
+
 # nyc test coverage
 .nyc_output
 
