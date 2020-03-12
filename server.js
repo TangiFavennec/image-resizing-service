@@ -14,7 +14,9 @@ if (!fs.existsSync(config.cacheDirectory)) {
   fs.mkdirSync(config.cacheDirectory);
 }
 
-app.use(bodyParser())
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(bodyParser.json());
 
 app.set('view engine', 'ejs')
 
@@ -33,6 +35,8 @@ app.get('/', function (req, res) {
   res.render('pages/index');
 });
 
+
+// Generic endpoint: reacts to http://localhost:3000/{widht x height}}/{format(,quality)}}/{targetImageUrl}}
 app.get(paths.urlMatch, function (req, res) {
   var now,
     jobStartTime,
