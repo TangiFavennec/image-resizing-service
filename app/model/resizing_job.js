@@ -3,9 +3,10 @@
 const fs                 = require('fs');
 const crypto             = require('crypto');
 const request            = require('request');
-var sharp              = require('sharp');
-const config           = require('../../config');
+var sharp                = require('sharp');
+const config             = require('../../config');
 const log                = require('../../logger');
+var url                = require('url');
 
 class ResizingJob {
   constructor(id, options, callback) {
@@ -52,7 +53,7 @@ ResizingJob.prototype.validateRemoteSource = function (cb) {
     } else if (res.headers['content-type'].split('/')[0] !== 'image') {
       cb('Unexpected content type', 415);
     } else {
-      cb(`Image successfully retrieved for url : ${this.options.url}`, 200);
+      cb(`Image successfully retrieved for url : ${options.url}`, 200);
     }
   });
 };

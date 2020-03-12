@@ -15,7 +15,6 @@ CallbackRepository.prototype.add = function (jobId, callback) {
 
 CallbackRepository.prototype.remove = function (jobId) {
   delete this.data[jobId]
-  console.log(this.data)
 }
 
 module.exports = CallbackRepository
