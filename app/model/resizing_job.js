@@ -51,7 +51,7 @@ ResizingJob.prototype.validateRemoteSource = function (cb) {
     } else if (res.headers['content-type'].split('/')[0] !== 'image') {
       cb('Unexpected content type', 415);
     } else {
-      cb('Image successfully retrieved', 200);
+      cb(`Image successfully retrieved for url : ${this.options.url}`, 200);
     }
   });
 };
@@ -74,6 +74,25 @@ ResizingJob.prototype.resizeStream = function () {
   .on('close', () => {
     fs.createReadStream(this.cacheFilePath).pipe(transform)
   });
+};
+
+ResizingJob.prototype.startResize = function () {
+  this.validateRemoteSource(function (details, status) {
+    if (status !== 200) {
+      return this.callback({status: status, url: this.options.url, details: details});
+    }
+    log.write(details)
+    this.isAlreadyCached(this.cacheFilePath, function (exists) {
+      if (exists) {
+        log.write(new Date() + ' - CACHE HIT: ' + this.options.imagefile);
+        this.callback(null, this.cacheFilePath, true);
+      } else {
+        log.write(new Date() + ' - RESIZE START: ' + this.options.imagefile);
+        this.resizeStream();
+      }
+    }.bind(this));
+
+  }.bind(this));
 };
 
 module.exports = ResizingJob
