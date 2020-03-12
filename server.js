@@ -34,9 +34,9 @@ app.get(paths.urlMatch, function (req, res) {
   jobEndTime = new Date().getTime();
   jobDuration = jobEndTime - jobStartTime;
   res.header('X-ResizingJobDuration', jobDuration);
-  
+
   res.send('OK').end();
 });
 
-log.write('resize server listening on ' + 3000);
-app.listen(3000);
+log.write('resize server listening on ' + config.appPort);
+app.listen(config.appPort);
