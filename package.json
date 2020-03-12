@@ -1,0 +1,30 @@
+{
+  "name": "image-resizing-service",
+  "version": "0.0.1",
+  "description": "A simple Node app built on Express which get a resized image from any input image url.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node -r dotenv/config server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bull": "^3.13.0",
+    "dotenv": "^8.0.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "moment": "^2.24.0",
+    "morgan": "^1.9.1",
+    "querystring": "^0.2.0",
+    "request": "^2.88.2",
+    "sharp": "^0.25.1",
+    "unirest": "^0.6.0",
+    "winston": "^3.2.1"
+  },
+  "engines": {
+    "node": "8.x"
+  },
+  "keywords": [
+    "node",
+    "express"
+  ]
+}
