@@ -2,7 +2,9 @@
 
 const config = {
   appPort: process.env.PORT || 3000,
-  appStdOut: true
+  appStdOut: true,
+  cacheDirectory: __dirname + '/cache/',
+  cacheHash: 'sha1'
 };
 
 module.exports = config;
