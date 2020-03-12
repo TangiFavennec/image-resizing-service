@@ -1,9 +1,11 @@
 'use strict';
 
-var fs                 = require('fs');
-var crypto             = require('crypto');
-var request            = require('request');
+const fs                 = require('fs');
+const crypto             = require('crypto');
+const request            = require('request');
+var sharp              = require('sharp');
 const config           = require('../../config');
+const log                = require('../../logger');
 
 class ResizingJob {
   constructor(options, callback) {
@@ -51,6 +53,26 @@ ResizingJob.prototype.validateRemoteSource = function (cb) {
     } else {
       cb('Image successfully retrieved', 200);
     }
+  });
+};
+
+ResizingJob.prototype.resizeStream = function () {
+  var source = this.options.url;
+
+  var transform = sharp().toFormat(this.options.format)
+                           .resize(this.options.width, this.options.height)
+                           .toFile(this.cacheFilePath, (err, info) => {
+                             if(err){
+                                this.callback({status: 500, details: 'Could not create resized file'})
+                             }
+                             else {
+                              this.callback(null, this.cacheFilePath)
+                             }
+                           } )
+
+  request(source).pipe(fs.createWriteStream(this.cacheFilePath))
+  .on('close', () => {
+    fs.createReadStream(this.cacheFilePath).pipe(transform)
   });
 };
 
