@@ -44,7 +44,7 @@ ResizingJob.prototype.validateRemoteSource = function (cb) {
   request.head(options, function (err, res, body) {
     if (err) {
       if (err.code === 'ETIMEDOUT') {
-        cb('Image retrieval itmed out, ETIMEDOUT');
+        cb('Image retrieval timed out (ETIMEDOUT)', 500);
       } else {
         cb('Image server side', 500);
       }
@@ -68,9 +68,9 @@ ResizingJob.prototype.resizeStream = function () {
                                 this.callback({status: 500, details: 'Could not create resized file'})
                              }
                              else {
-                              log.write(`Finished job n ${this.id}`)
                               this.callback(null, this.cacheFilePath)
                              }
+                             log.write(`Job ${this.id} ended`)
                            } )
 
   request(source).pipe(fs.createWriteStream(this.cacheFilePath))
@@ -87,10 +87,11 @@ ResizingJob.prototype.startResize = function () {
     log.write(details)
     this.isAlreadyCached(this.cacheFilePath, function (exists) {
       if (exists) {
-        log.write(new Date() + ' - CACHE HIT: ' + this.options.imagefile);
+        log.write(`${new Date()} - CACHE HIT: ${this.options.imagefile} for job ${this.id}`);
+        log.write(`Job ${this.id} ended`)
         this.callback(null, this.cacheFilePath, true);
       } else {
-        log.write(new Date() + ' - RESIZE START: ' + this.options.imagefile);
+        log.write(`${new Date()} - RESIZE START: ${this.options.imagefile} for job ${this.id}`);
         this.resizeStream();
       }
     }.bind(this));

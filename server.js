@@ -46,7 +46,6 @@ app.get(paths.urlMatch, function (req, res) {
   now = jobStartTime = new Date().getTime();
 
   var resizeRequest = (new ResizeRequestBuilder(req.params, req.query)).build()
-  log.write('request built')
 
   manager.addJob(resizeRequest, function (err, file, cached) {
     if (err) {
