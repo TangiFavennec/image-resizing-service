@@ -5,9 +5,19 @@ const log = require('../../logger')
 var Queue = require('bull');
 var ResizingJob = require('./resizing_job')
 
+
 class ImageResizingManager {
   constructor() {
-    this.queue = new Queue(config.redis.queueName, config.redis.url);
+    var url;
+    // This should be handled with some program arg
+    if(config.current_env == 'DEV'){
+      url = config.redis.url_dev
+    }
+    else {
+      url = config.redis.url_prod
+    }
+    url = `${url}:${config.redis.port}`
+    this.queue = new Queue(config.redis.queueName, url);
     this.callbackRepository = new CallbackRepository()
   }
 }
@@ -28,7 +38,6 @@ ImageResizingManager.prototype.startProcessing = function () {
   let repository = this.callbackRepository
   this.queue.process(function (job, done) {
     var resizingJob = new ResizingJob(job.id, job.data, repository.getById(job.id))
-    log.write(`Create job n ${job.id}`)
     resizingJob.startResize();
     repository.remove(job.id)
     done()

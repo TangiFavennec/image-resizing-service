@@ -9,6 +9,7 @@ const config = {
     maxAge: 315360000,
     expires: 1209600000
   },
+  current_env: 'DEV',
   imageRetrievalTimeOut: 5000,
   defaultFormat: 'jpg',
   defaultHeight: 100,
@@ -16,7 +17,9 @@ const config = {
   defaultWidth: 100,
   redis: {
     queueName: 'image resizing',
-    url: 'redis://127.0.0.1:6379'
+    port: 6379,
+    url_dev: 'redis://127.0.0.1',
+    url_prod: process.env.REDIS_URL
   }
 
 };
