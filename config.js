@@ -9,7 +9,7 @@ const config = {
     maxAge: 315360000,
     expires: 1209600000
   },
-  current_env: 'DEV',
+  current_env: 'PROD',
   imageRetrievalTimeOut: 5000,
   defaultFormat: 'jpg',
   defaultHeight: 100,
