@@ -1,0 +1,17 @@
+  redis:
+    image: redis
+    container_name: queue
+    expose:
+      - 6379
+  web:
+    build: ./
+    volumes:
+      - ./:/app
+    links:
+      - redis
+    ports:
+      - 3000:3000
+    environment:
+      - REDIS_URL=redis://queue
+      - NODE_ENV=development
+      - PORT=3000

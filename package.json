@@ -4,7 +4,7 @@
   "description": "A simple Node app built on Express which get a resized image from any input image url.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node -r dotenv/config server.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -25,6 +25,10 @@
   "engines": {
     "node": "10.x"
   },
+  "repository": {
+    "url" : "https://github.com/TangiFavennec/image-resizing-service"
+  },
+  "license": "",
   "keywords": [
     "node",
     "express"
