@@ -16,15 +16,14 @@ function reformatUrl (url) {
 
 ResizeRequestBuilder.prototype.build = function () {
 
-  var clientUrl = reformatUrl(this.params[4]);
+  var clientUrl = reformatUrl(this.params[3]);
 
   var resizeRequest = {
     action:  'resize',
     width:   parseInt(this.params[0]) || config.defaultWidth,
     height:  parseInt(this.params[1]) || config.defaultHeight,
     format:  this.params[2] || config.defaultFormat,
-    quality: parseInt(this.params[3]) || config.defaultQuality, 
-    imagefile: this.params[4],
+    imagefile: this.params[3],
     url: clientUrl
   };
 

@@ -1,6 +1,6 @@
 const urlMatch = new RegExp([
   '^\/?([0-9]+)x?([0-9]+)',
-  '\/?(png|jpg|jpeg)?,?([0-9]+)?', // only png, jpg, jpeg allowed
+  '\/?(png|jpg|jpeg)?', // only png, jpg, jpeg allowed
   '\/(.*)$'
 ].join(''));
 
